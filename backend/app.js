@@ -5,6 +5,8 @@ import courseRoutes from './routes/courses.js';
 import enrollmentRoutes from './routes/enrollments.js';
 import fileRoutes from './routes/files.js';
 import withdrawalRoutes from './routes/withdrawals.js';
+import AppError from './utils/appError';
+import globalErrorHandler from './controllers/errorController';
 
 const app = express();
 
