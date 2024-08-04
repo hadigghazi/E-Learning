@@ -51,7 +51,16 @@ export const apiSlice = createApi({
     getCourseById: builder.query({
         query: (id) => `/courses/${id}`,
     }),
+    enroll: builder.mutation({
+        query: (body) => ({
+          url: `/enrollments/enroll/${body.courseId}`,
+          method: 'POST',
+        }),
+      }),
+      getMyCourses: builder.query({
+        query: () => '/enrollments/my-courses',
+      }),
   }),
 });
 
-export const { useLoginMutation, useRegisterMutation, useLogoutMutation, useGetCoursesQuery, useGetCourseByIdQuery } = apiSlice;
+export const { useLoginMutation, useRegisterMutation, useLogoutMutation, useGetCoursesQuery, useGetCourseByIdQuery, useEnrollMutation, useGetMyCoursesQuery } = apiSlice;
