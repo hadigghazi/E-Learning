@@ -26,3 +26,12 @@ export const getCourse = catchAsync(async (req, res, next) => {
   });
 });
 
+export const createCourse = catchAsync(async (req, res, next) => {
+  const newCourse = await Course.create(req.body);
+  res.status(201).json({
+    status: 'success',
+    data: {
+      course: newCourse
+    }
+  });
+});
