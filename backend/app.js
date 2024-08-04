@@ -23,14 +23,14 @@ app.use(morgan('dev'));
 
 app.use('/api/v1/users', userRoutes);
 app.use('/api/v1/courses', courseRoutes);
-app.use('/api/enrollments', enrollmentRoutes);
+app.use('/api/v1/enrollments', enrollmentRoutes);
 app.use('/api/files', fileRoutes);
 app.use('/api/withdrawals', withdrawalRoutes);
 
 app.all('*', (req, res, next) => {
     next(new AppError(`Can't find ${req.originalUrl} on this server!`, 404));
   });
-  
+
 app.use(globalErrorHandler);
 
 const PORT = process.env.PORT || 5000;
