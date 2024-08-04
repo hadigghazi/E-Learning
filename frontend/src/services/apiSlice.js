@@ -11,7 +11,6 @@ export const apiSlice = createApi({
                 body: credentials,
             }),
             transformResponse: (response) => {
-                // Extract user data from response
                 return { user: response.data.user, token: response.token };
               },
             }),
@@ -22,7 +21,6 @@ export const apiSlice = createApi({
                 body: userData,
             }),
             transformResponse: (response) => {
-                // Extract user data from response
                 return { user: response.data.user, token: response.token };
               },
             }),
