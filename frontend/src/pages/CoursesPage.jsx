@@ -1,8 +1,10 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom'; 
 import { useGetCoursesQuery } from '../services/apiSlice';
 
 const CoursesPage = () => {
   const { data, error, isLoading } = useGetCoursesQuery();
+  const navigate = useNavigate(); 
   const user = JSON.parse(localStorage.getItem('user'));
 
   if (isLoading) return <p>Loading courses...</p>;
@@ -14,6 +16,10 @@ const CoursesPage = () => {
 
   const courses = data?.data.courses || [];
 
+  const handleCourseClick = (id) => {
+    navigate(`/courses/${id}`);
+  };
+
   return (
     <div>
       <h1>Explore Courses</h1>
@@ -21,7 +27,7 @@ const CoursesPage = () => {
       {courses.length > 0 ? (
         <ul>
           {courses.map((course) => (
-            <li key={course._id}>
+            <li key={course._id} onClick={() => handleCourseClick(course._id)}>
               <h2>{course.title}</h2>
               <p>{course.description}</p>
             </li>

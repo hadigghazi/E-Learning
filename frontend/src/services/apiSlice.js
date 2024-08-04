@@ -48,7 +48,10 @@ export const apiSlice = createApi({
     getCourses: builder.query({
         query: () => '/courses',
       }),
+    getCourseById: builder.query({
+        query: (id) => `/courses/${id}`,
+    }),
   }),
 });
 
-export const { useLoginMutation, useRegisterMutation, useLogoutMutation, useGetCoursesQuery } = apiSlice;
+export const { useLoginMutation, useRegisterMutation, useLogoutMutation, useGetCoursesQuery, useGetCourseByIdQuery } = apiSlice;

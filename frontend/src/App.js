@@ -6,6 +6,7 @@ import ProtectedRoute from './components/ProtectedRoute';
 import WelcomePage from './pages/WelcomePage';
 import Navbar from './components/Navbar';
 import CoursesPage from './pages/CoursesPage';
+import CourseDetailPage from './pages/CourseDetailPage';
 
 const App = () => {
     return (
@@ -31,6 +32,8 @@ const App = () => {
           }
         />
                 <Route path='/courses' element={<CoursesPage />} />
+                <Route path="/courses/:id" element={<CourseDetailPage />} />
+
             </Routes>
         </Router>
     );
