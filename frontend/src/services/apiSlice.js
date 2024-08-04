@@ -60,7 +60,14 @@ export const apiSlice = createApi({
       getMyCourses: builder.query({
         query: () => '/enrollments/my-courses',
       }),
+      withdraw: builder.mutation({
+        query: (body) => ({
+          url: `/withdrawals/apply`,
+          method: 'POST',
+          body,
+        }),
+      }),
   }),
 });
 
-export const { useLoginMutation, useRegisterMutation, useLogoutMutation, useGetCoursesQuery, useGetCourseByIdQuery, useEnrollMutation, useGetMyCoursesQuery } = apiSlice;
+export const { useLoginMutation, useRegisterMutation, useLogoutMutation, useGetCoursesQuery, useGetCourseByIdQuery, useEnrollMutation, useGetMyCoursesQuery, useWithdrawMutation } = apiSlice;
