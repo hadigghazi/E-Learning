@@ -29,3 +29,37 @@ const upload = multer({
         cb(new AppError('Only PDFs, DOCs, DOCXs, and TXT files are allowed!', 400));
     }
 }).single('file');
+
+export const uploadFile = catchAsync(async (req, res, next) => {
+    upload(req, res, async (err) => {
+        if (err) {
+            return next(err);
+        }
+
+        if (!req.file) {
+            return next(new AppError('No file uploaded', 400));
+        }
+
+        const { courseId } = req.body;
+
+        const course = await Course.findById(courseId);
+        if (!course) {
+            return next(new AppError('No course found with that ID', 404));
+        }
+
+        const file = await File.create({
+            fileName: req.file.filename,
+            filePath: req.file.path,
+            fileType: req.file.mimetype,
+            uploadedBy: req.user.id, 
+            courseId: courseId
+        });
+
+        res.status(201).json({
+            status: 'success',
+            data: {
+                file
+            }
+        });
+    });
+});
