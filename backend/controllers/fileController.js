@@ -74,3 +74,14 @@ export const downloadFile = catchAsync(async (req, res, next) => {
 
     res.sendFile(file.filePath, { root: '.' });
 });
+
+export const getAllFiles = catchAsync(async (req, res, next) => {
+    const files = await File.find().populate('uploadedBy');
+    
+    res.status(200).json({
+        status: 'success',
+        data: {
+            files
+        }
+    });
+});
