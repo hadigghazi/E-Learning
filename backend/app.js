@@ -9,12 +9,17 @@ import morgan from 'morgan';
 import AppError from './utils/appError.js';
 import globalErrorHandler from './controllers/errorController.js';
 import cors from 'cors';
+import path from 'path';
+import { fileURLToPath } from 'url';
 import dotenv from 'dotenv';
 dotenv.config();
 
 const app = express();
 app.use(cors());
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 connectDB();
 
 app.use(express.json());
@@ -24,7 +29,7 @@ app.use(morgan('dev'));
 app.use('/api/v1/users', userRoutes);
 app.use('/api/v1/courses', courseRoutes);
 app.use('/api/v1/enrollments', enrollmentRoutes);
-app.use('/api/files', fileRoutes);
+app.use('/api/v1/files', fileRoutes);
 app.use('/api/v1/withdrawals', withdrawalRoutes);
 
 app.all('*', (req, res, next) => {
