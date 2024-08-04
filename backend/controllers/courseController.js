@@ -1,36 +1,74 @@
 import Course from '../models/Course.js';
-import User from '../models/User.js';
 import catchAsync from '../utils/catchAsync.js';
 import AppError from '../utils/appError.js';
 
-export const enrollInCourse = catchAsync(async (req, res, next) => {
-  const { courseId, userId } = req.body;
+export const getAllCourses = catchAsync(async (req, res, next) => {
+  const courses = await Course.find();
+  res.status(200).json({
+    status: 'success',
+    results: courses.length,
+    data: {
+      courses
+    }
+  });
+});
 
-  const course = await Course.findById(courseId);
+export const getCourse = catchAsync(async (req, res, next) => {
+  const course = await Course.findById(req.params.id);
   if (!course) {
-    return next(new AppError('Course not found', 404));
+    return next(new AppError('No course found with that ID', 404));
   }
-
-  const user = await User.findById(userId);
-  if (!user) {
-    return next(new AppError('User not found', 404));
-  }
-
-  if (course.students.includes(userId)) {
-    return next(new AppError('User already enrolled in this course', 400));
-  }
-
-  course.students.push(userId);
-  await course.save();
-
-  user.enrolledCourses.push(courseId);
-  await user.save();
-
   res.status(200).json({
     status: 'success',
     data: {
-      course,
-      user
+      course
     }
+  });
+});
+
+export const createCourse = catchAsync(async (req, res, next) => {
+    // Ensure req.user is set by the protect middleware
+    if (!req.user) {
+      return next(new AppError('You must be logged in to create a course.', 401));
+    }
+  
+    // Create a new course with the createdBy field set to the logged-in user's ID
+    const newCourse = await Course.create({
+      ...req.body,
+      createdBy: req.user._id
+    });
+  
+    res.status(201).json({
+      status: 'success',
+      data: {
+        course: newCourse
+      }
+    });
+  });
+  
+export const updateCourse = catchAsync(async (req, res, next) => {
+  const course = await Course.findByIdAndUpdate(req.params.id, req.body, {
+    new: true,
+    runValidators: true
+  });
+  if (!course) {
+    return next(new AppError('No course found with that ID', 404));
+  }
+  res.status(200).json({
+    status: 'success',
+    data: {
+      course
+    }
+  });
+});
+
+export const deleteCourse = catchAsync(async (req, res, next) => {
+  const course = await Course.findByIdAndDelete(req.params.id);
+  if (!course) {
+    return next(new AppError('No course found with that ID', 404));
+  }
+  res.status(204).json({
+    status: 'success',
+    data: null
   });
 });
