@@ -27,12 +27,10 @@ export const getCourse = catchAsync(async (req, res, next) => {
 });
 
 export const createCourse = catchAsync(async (req, res, next) => {
-    // Ensure req.user is set by the protect middleware
     if (!req.user) {
       return next(new AppError('You must be logged in to create a course.', 401));
     }
   
-    // Create a new course with the createdBy field set to the logged-in user's ID
     const newCourse = await Course.create({
       ...req.body,
       createdBy: req.user._id
