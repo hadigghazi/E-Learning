@@ -60,3 +60,22 @@ export const getMyCourses = catchAsync(async (req, res, next) => {
     },
   });
 });
+
+export const listStudentsInCourse = catchAsync(async (req, res, next) => {
+    const { courseId } = req.params;
+
+    const course = await Course.findById(courseId).populate('students');
+
+    if (!course) {
+        return next(new AppError('No course found with that ID', 404));
+    }
+
+    const students = course.students;
+
+    res.status(200).json({
+        status: 'success',
+        data: {
+            students
+        }
+    });
+});
