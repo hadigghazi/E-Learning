@@ -74,7 +74,10 @@ export const apiSlice = createApi({
           body: course,
         }),
       }),
+      getStudentsInCourse: builder.query({
+        query: (courseId) => `/enrollments/${courseId}/students`,
+      }),
   }),
 });
 
-export const { useLoginMutation, useRegisterMutation, useLogoutMutation, useGetCoursesQuery, useGetCourseByIdQuery, useEnrollMutation, useGetMyCoursesQuery, useWithdrawMutation, useAddCourseMutation } = apiSlice;
+export const { useLoginMutation, useRegisterMutation, useLogoutMutation, useGetCoursesQuery, useGetCourseByIdQuery, useEnrollMutation, useGetMyCoursesQuery, useWithdrawMutation, useAddCourseMutation, useGetStudentsInCourseQuery } = apiSlice;
