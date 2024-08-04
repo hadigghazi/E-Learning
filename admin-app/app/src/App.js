@@ -7,7 +7,7 @@ import WelcomePage from './pages/WelcomePage';
 import Navbar from './components/Navbar';
 import CoursesPage from './pages/CoursesPage';
 import CourseDetailPage from './pages/CourseDetailPage';
-import MyCoursesPage from './pages/MyCoursesPage';
+import AddCoursePage from './pages/AddCoursePage';
 
 const App = () => {
     return (
@@ -34,6 +34,7 @@ const App = () => {
         />
                 <Route path='/courses' element={<CoursesPage />} />
                 <Route path="/courses/:id" element={<CourseDetailPage />} />
+                <Route path="/add-course" element={<AddCoursePage />} />
             </Routes>
         </Router>
     );

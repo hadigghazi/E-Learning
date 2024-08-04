@@ -27,7 +27,7 @@ const Navbar = () => {
           <Link to="/courses">Courses</Link>
         </li>
         <li>
-          <Link to="/my-courses">My Courses</Link>
+          <Link to="/add-course">Add Course</Link>
         </li>
         {loggedin ? (
           <>
