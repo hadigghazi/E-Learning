@@ -22,11 +22,10 @@ const LoginPage = () => {
       e.preventDefault();
       try {
         const response = await login(formData).unwrap();
-        // Save token and user data in localStorage or state
         localStorage.setItem('token', response.token);
         localStorage.setItem('user', JSON.stringify(response.user));
         setError('');
-        navigate('/home');
+        navigate('/courses');
       } catch (err) {
         console.error('Failed to login:', err);
         setError('Failed to login');

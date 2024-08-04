@@ -24,7 +24,7 @@ const Navbar = () => {
     <nav>
       <ul>
         <li>
-          <Link to="/home">Home</Link>
+          <Link to="/courses">Courses</Link>
         </li>
         {loggedin ? (
           <>

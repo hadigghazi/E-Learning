@@ -2,15 +2,15 @@ import React from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import LoginPage from './pages/LoginPage';
 import RegisterPage from './pages/RegisterPage';
-import HomePage from './pages/HomePage'; 
 import ProtectedRoute from './components/ProtectedRoute';
 import WelcomePage from './pages/WelcomePage';
 import Navbar from './components/Navbar';
+import CoursesPage from './pages/CoursesPage';
 
 const App = () => {
     return (
         <Router>
-                        <Navbar />
+            <Navbar />
 
             <Routes>
               <Route path='/' element={<WelcomePage />} />
@@ -30,7 +30,7 @@ const App = () => {
             </ProtectedRoute>
           }
         />
-                <Route path="/home" element={<HomePage />} />
+                <Route path='/courses' element={<CoursesPage />} />
             </Routes>
         </Router>
     );

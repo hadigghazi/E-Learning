@@ -25,7 +25,7 @@ const RegisterPage = () => {
     try {
       const user = await register(formData).unwrap();
       console.log('User registered:', user);
-      setError(''); // Clear error if registration is successful
+      setError(''); 
     } catch (err) {
       console.error('Failed to register:', err);
       setError('Failed to register');
