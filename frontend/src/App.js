@@ -5,10 +5,13 @@ import RegisterPage from './pages/RegisterPage';
 import HomePage from './pages/HomePage'; 
 import ProtectedRoute from './components/ProtectedRoute';
 import WelcomePage from './pages/WelcomePage';
+import Navbar from './components/Navbar';
 
 const App = () => {
     return (
         <Router>
+                        <Navbar />
+
             <Routes>
               <Route path='/' element={<WelcomePage />} />
             <Route
