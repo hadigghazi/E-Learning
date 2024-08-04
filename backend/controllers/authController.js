@@ -1,9 +1,9 @@
 import crypto from 'crypto';
 import { promisify } from 'util';
 import jwt from 'jsonwebtoken';
-import User from './../models/userModel';
-import catchAsync from './../utils/catchAsync';
-import AppError from './../utils/appError';
+import User from '../models/User.js';
+import catchAsync from './../utils/catchAsync.js';
+import AppError from './../utils/appError.js';
 
 const signToken = (id) => 
   jwt.sign({ id }, process.env.JWT_SECRET, {
@@ -31,33 +31,39 @@ const createSendToken = (user, statusCode, req, res) => {
 };
 
 export const signup = catchAsync(async (req, res, next) => {
-  const newUser = await User.create({
-    name: req.body.name,
-    email: req.body.email,
-    password: req.body.password,
-    passwordConfirm: req.body.passwordConfirm,
+    console.log('Signup request received');
+    const newUser = await User.create({
+      name: req.body.name,
+      email: req.body.email,
+      password: req.body.password,
+      passwordConfirm: req.body.passwordConfirm,
+    });
+    console.log('New user created:', newUser);
+  
+    const url = `${req.protocol}://${req.get('host')}/me`;
+    createSendToken(newUser, 201, req, res);
   });
-
-  const url = `${req.protocol}://${req.get('host')}/me`;
-  createSendToken(newUser, 201, req, res);
-});
-
-export const login = catchAsync(async (req, res, next) => {
-  const { email, password } = req.body;
-
-  if (!email || !password) {
-    return next(new AppError('Please provide email and password!', 400));
-  }
-
-  const user = await User.findOne({ email }).select('+password');
-
-  if (!user || !(await user.correctPassword(password, user.password))) {
-    return next(new AppError('Incorrect email or password', 401));
-  }
-
-  createSendToken(user, 200, req, res);
-});
-
+  
+  
+  export const login = catchAsync(async (req, res, next) => {
+    console.log('Login request received');
+    const { email, password } = req.body;
+  
+    if (!email || !password) {
+      console.log('Email or password missing');
+      return next(new AppError('Please provide email and password!', 400));
+    }
+  
+    const user = await User.findOne({ email }).select('+password');
+    if (!user || !(await user.correctPassword(password, user.password))) {
+      console.log('Incorrect email or password');
+      return next(new AppError('Incorrect email or password', 401));
+    }
+  
+    console.log('User found and password correct:', user);
+    createSendToken(user, 200, req, res);
+  });
+  
 export const logout = (req, res) => {
   res.cookie('jwt', 'loggedout', {
     expires: new Date(Date.now() + 10 * 1000),

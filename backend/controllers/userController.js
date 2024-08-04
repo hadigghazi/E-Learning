@@ -1,9 +1,9 @@
 import multer from 'multer';
 import sharp from 'sharp';
-import User from './../models/userModel';
-import catchAsync from './../utils/catchAsync';
-import AppError from './../utils/appError';
-import * as factory from './handlerFactory';
+import User from '../models/User.js';
+import catchAsync from './../utils/catchAsync.js';
+import AppError from './../utils/appError.js';
+import * as factory from './handlerFactory.js';
 
 const multerStorage = multer.memoryStorage();
 

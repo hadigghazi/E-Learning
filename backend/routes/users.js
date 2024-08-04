@@ -1,25 +1,54 @@
 import express from 'express';
-import User from '../models/User.js';
+import { 
+  getMe, 
+  getUser, 
+  uploadUserPhoto, 
+  resizeUserPhoto, 
+  updateMe, 
+  deleteMe, 
+  getAllUsers, 
+  createUser, 
+  updateUser, 
+  deleteUser 
+} from '../controllers/userController.js';
+
+import { 
+  signup, 
+  login, 
+  logout, 
+  forgotPassword, 
+  resetPassword, 
+  protect, 
+  updatePassword, 
+  restrictTo 
+} from '../controllers/authController.js';
 
 const router = express.Router();
 
-router.post('/', async (req, res) => {
-    const { username, email, password, role } = req.body;
-    
-    try {
-        let user = new User({
-            username,
-            email,
-            password,
-            role
-        });
+router.post('/signup', signup);
+router.post('/login', login);
+router.get('/logout', logout);
+router.post('/forgotPassword', forgotPassword);
+router.patch('/resetPassword/:token', resetPassword);
 
-        await user.save();
-        res.json(user);
-    } catch (err) {
-        console.error(err.message);
-        res.status(500).send('Server error');
-    }
-});
+router.use(protect);
+
+router.patch('/updateMyPassword', updatePassword);
+router.get('/me', getMe, getUser);
+router.patch('/updateMe', uploadUserPhoto, resizeUserPhoto, updateMe);
+router.delete('/deleteMe', deleteMe);
+
+router.use(restrictTo('admin'));
+
+router
+  .route('/')
+  .get(getAllUsers)
+  .post(createUser);
+
+router
+  .route('/:id')
+  .get(getUser)
+  .patch(updateUser)
+  .delete(deleteUser);
 
 export default router;
