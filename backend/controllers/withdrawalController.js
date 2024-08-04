@@ -31,3 +31,14 @@ export const applyForWithdrawal = catchAsync(async (req, res, next) => {
         }
     });
 });
+
+export const getWithdrawals = catchAsync(async (req, res, next) => {
+    const withdrawals = await Withdrawal.find().populate('userId').populate('courseId');
+
+    res.status(200).json({
+        status: 'success',
+        data: {
+            withdrawals
+        }
+    });
+});
