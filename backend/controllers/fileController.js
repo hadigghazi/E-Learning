@@ -63,3 +63,14 @@ export const uploadFile = catchAsync(async (req, res, next) => {
         });
     });
 });
+
+export const downloadFile = catchAsync(async (req, res, next) => {
+    const { id } = req.params;
+
+    const file = await File.findById(id);
+    if (!file) {
+        return next(new AppError('No file found with that ID', 404));
+    }
+
+    res.sendFile(file.filePath, { root: '.' });
+});
