@@ -85,3 +85,16 @@ export const getAllFiles = catchAsync(async (req, res, next) => {
         }
     });
 });
+
+export const getFilesForCourse = catchAsync(async (req, res, next) => {
+    const { courseId } = req.params;
+
+    const files = await File.find({ courseId }).populate('uploadedBy');
+
+    res.status(200).json({
+        status: 'success',
+        data: {
+            files
+        }
+    });
+});
