@@ -16,3 +16,16 @@ const storage = multer.diskStorage({
         cb(null, `${file.fieldname}-${Date.now()}${ext}`);
     }
 });
+
+const upload = multer({
+    storage: storage,
+    fileFilter: (req, file, cb) => {
+        const filetypes = /pdf|doc|docx|txt/;
+        const mimetype = filetypes.test(file.mimetype);
+        const extname = filetypes.test(path.extname(file.originalname).toLowerCase());
+        if (mimetype && extname) {
+            return cb(null, true);
+        }
+        cb(new AppError('Only PDFs, DOCs, DOCXs, and TXT files are allowed!', 400));
+    }
+}).single('file');
