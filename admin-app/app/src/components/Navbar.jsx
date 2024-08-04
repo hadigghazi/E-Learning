@@ -29,6 +29,9 @@ const Navbar = () => {
         <li>
           <Link to="/add-course">Add Course</Link>
         </li>
+        <li>
+          <Link to="/withdrawals">Withdrawals</Link>
+        </li>
         {loggedin ? (
           <>
             <li>

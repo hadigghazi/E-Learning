@@ -78,3 +78,31 @@ export const updateWithdrawalStatus = catchAsync(async (req, res, next) => {
         }
     });
 });
+
+
+export const deleteWithdrawal = catchAsync(async (req, res, next) => {
+    const { id } = req.params;
+
+    const withdrawal = await Withdrawal.findById(id);
+    if (!withdrawal) {
+        return next(new AppError('No withdrawal found with that ID', 404));
+    }
+
+    if (withdrawal.status === 'approved') {
+        const course = await Course.findById(withdrawal.courseId);
+        const user = await User.findById(withdrawal.userId);
+
+        user.enrolledCourses.push(withdrawal.courseId); 
+        await user.save({ validateBeforeSave: false });
+
+        course.students.push(withdrawal.userId);
+        await course.save();
+    }
+
+    await Withdrawal.findByIdAndDelete(id);
+
+    res.status(204).json({
+        status: 'success',
+        message: 'Withdrawal request deleted successfully'
+    });
+});

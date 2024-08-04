@@ -87,7 +87,13 @@ export const apiSlice = createApi({
           body: { status },
         }),
       }),
+      deleteWithdrawal: builder.mutation({
+        query: (id) => ({
+          url: `/withdrawals/${id}`,
+          method: 'DELETE',
+        }),
+      }),
   }),
 });
 
-export const { useLoginMutation, useRegisterMutation, useLogoutMutation, useGetCoursesQuery, useGetCourseByIdQuery, useEnrollMutation, useGetMyCoursesQuery, useWithdrawMutation, useAddCourseMutation, useGetStudentsInCourseQuery, useGetWithdrawalsQuery, useUpdateWithdrawalStatusMutation } = apiSlice;
+export const { useLoginMutation, useRegisterMutation, useLogoutMutation, useGetCoursesQuery, useGetCourseByIdQuery, useEnrollMutation, useGetMyCoursesQuery, useWithdrawMutation, useAddCourseMutation, useGetStudentsInCourseQuery, useGetWithdrawalsQuery, useUpdateWithdrawalStatusMutation, useDeleteWithdrawalMutation } = apiSlice;
