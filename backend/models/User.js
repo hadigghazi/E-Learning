@@ -47,7 +47,13 @@ const userSchema = new mongoose.Schema({
     type: Boolean,
     default: true,
     select: false
-  }
+  },
+  enrolledCourses: [
+    {
+      type: mongoose.Schema.ObjectId,
+      ref: 'Course'
+    }
+  ]
 });
 
 userSchema.pre('save', async function(next) {

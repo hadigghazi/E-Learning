@@ -22,7 +22,7 @@ app.use(express.json());
 app.use(morgan('dev'));
 
 app.use('/api/v1/users', userRoutes);
-app.use('/api/courses', courseRoutes);
+app.use('/api/v1/courses', courseRoutes);
 app.use('/api/enrollments', enrollmentRoutes);
 app.use('/api/files', fileRoutes);
 app.use('/api/withdrawals', withdrawalRoutes);
