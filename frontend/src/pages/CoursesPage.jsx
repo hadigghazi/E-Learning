@@ -1,12 +1,13 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom'; 
 import { useGetCoursesQuery } from '../services/apiSlice';
+import styles from '../styles/CoursesPage.module.css';  
 
 const CoursesPage = () => {
   const { data, error, isLoading } = useGetCoursesQuery();
   const navigate = useNavigate(); 
   const user = JSON.parse(localStorage.getItem('user'));
-  console.log(user)
+  
   if (isLoading) return <p>Loading courses...</p>;
 
   if (error) {
@@ -21,15 +22,15 @@ const CoursesPage = () => {
   };
 
   return (
-    <div>
-      <h1>Explore Courses</h1>
-      <p>{user ? `Hello ${user.name} 👋! Enjoy The Courses` : 'Hello! Enjoy The Courses'}</p>
+    <div className={styles.container}>
+      <h1 className={styles.heading}>Explore Courses</h1>
+      <p className={styles.greeting}>{user ? `Hello ${user.name} 👋! Enjoy The Courses` : 'Hello! Enjoy The Courses'}</p>
       {courses.length > 0 ? (
-        <ul>
+        <ul className={styles.courseList}>
           {courses.map((course) => (
-            <li key={course._id} onClick={() => handleCourseClick(course._id)}>
-              <h2>{course.title}</h2>
-              <p>{course.description}</p>
+            <li key={course._id} className={styles.courseItem} onClick={() => handleCourseClick(course._id)}>
+              <h2 className={styles.courseTitle}>{course.title}</h2>
+              <p className={styles.courseDescription}>{course.description}</p>
             </li>
           ))}
         </ul>
