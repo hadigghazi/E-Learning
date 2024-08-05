@@ -6,7 +6,7 @@ const CoursesPage = () => {
   const { data, error, isLoading } = useGetCoursesQuery();
   const navigate = useNavigate(); 
   const user = JSON.parse(localStorage.getItem('user'));
-
+  console.log(user)
   if (isLoading) return <p>Loading courses...</p>;
 
   if (error) {

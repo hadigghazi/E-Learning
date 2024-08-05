@@ -1,8 +1,7 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
-import { useNavigate } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import { Link, useNavigate } from 'react-router-dom';
 import { useLogoutMutation } from '../services/apiSlice';
+import styles from '../styles/Navbar.module.css';  
 
 const Navbar = () => {
   const [logout] = useLogoutMutation();
@@ -21,27 +20,26 @@ const Navbar = () => {
   };
 
   return (
-    <nav>
-      <ul>
-        <li>
-          <Link to="/courses">Courses</Link>
+    <nav className={styles.nav}>
+      <Link to="/" className={styles.logo}>MyApp</Link> {/* Logo text */}
+      <ul className={styles.list}>
+        <li className={styles.listItem}>
+          <Link to="/courses" className={styles.link}>Courses</Link>
         </li>
-        <li>
-          <Link to="/my-courses">My Courses</Link>
+        <li className={styles.listItem}>
+          <Link to="/my-courses" className={styles.link}>My Courses</Link>
         </li>
         {loggedin ? (
-          <>
-            <li>
-              <button onClick={handleLogout}>Logout</button>
-            </li>
-          </>
+          <li className={styles.listItem}>
+            <button onClick={handleLogout} className={styles.button}>Logout</button>
+          </li>
         ) : (
           <>
-            <li>
-              <Link to="/login">Login</Link>
+            <li className={styles.listItem}>
+              <Link to="/login" className={styles.link}>Login</Link>
             </li>
-            <li>
-              <Link to="/register">Sign Up</Link>
+            <li className={styles.listItem}>
+              <Link to="/register" className={styles.link}>Sign Up</Link>
             </li>
           </>
         )}
