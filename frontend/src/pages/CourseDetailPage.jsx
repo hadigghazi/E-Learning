@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { useGetCourseByIdQuery, useEnrollMutation, useWithdrawMutation, useGetMyCoursesQuery } from '../services/apiSlice';
+import { useGetCourseByIdQuery, useEnrollMutation, useWithdrawMutation, useGetMyCoursesQuery, useGetFilesForCourseQuery } from '../services/apiSlice';
 
 const CourseDetailPage = () => {
   const { id } = useParams();
@@ -12,6 +12,7 @@ const CourseDetailPage = () => {
   const [withdrawalReason, setWithdrawalReason] = useState('');
   const [hasAppliedForWithdrawal, setHasAppliedForWithdrawal] = useState(false);
   const [withdrawalStatus, setWithdrawalStatus] = useState(null);
+  const { data: filesData, error: filesError, isLoading: filesLoading } = useGetFilesForCourseQuery(id);
   const user = JSON.parse(localStorage.getItem('user'));
 
   useEffect(() => {
@@ -23,24 +24,29 @@ const CourseDetailPage = () => {
 
   useEffect(() => {
     if (data && data.data.course) {
-      // Fetch existing withdrawal status if available
       setWithdrawalStatus(data.data.course.withdrawalStatus || null);
     }
   }, [data]);
 
-  if (isLoading) return <p>Loading course details...</p>;
+  if (isLoading || filesLoading) return <p>Loading course details...</p>;
 
   if (error) {
     console.error('Error fetching course details:', error);
     return <p>Error loading course details: {error.data?.message || error.message || 'Unknown error'}</p>;
   }
 
+  if (filesError) {
+    console.error('Error fetching files:', filesError);
+    return <p>Error loading files: {filesError.data?.message || filesError.message || 'Unknown error'}</p>;
+  }
+
   const course = data?.data.course;
+  const files = filesData?.data.files;
 
   const handleEnroll = async () => {
     try {
       await enroll({ courseId: course._id }).unwrap();
-      refetch(); // Refresh the list of enrolled courses
+      refetch();
     } catch (err) {
       console.error('Error enrolling in course:', err);
     }
@@ -56,7 +62,7 @@ const CourseDetailPage = () => {
       const response = await withdraw({ courseId: course._id, userId: user._id, reason: withdrawalReason }).unwrap();
       setWithdrawalStatus(response.data.withdrawal.status);
       setHasAppliedForWithdrawal(true);
-      refetch(); // Refresh the list of enrolled courses
+      refetch();
     } catch (err) {
       console.error('Error withdrawing from course:', err);
     }
@@ -69,7 +75,7 @@ const CourseDetailPage = () => {
       {user && (
         <div>
           {isEnrolled ? (
-            withdraw?.data?.withdrawal?.status === 'pending' ? (
+            withdrawalStatus === 'pending' ? (
               <div>
                 <p>Your withdrawal request is pending approval.</p>
                 <button disabled>Withdraw</button>
@@ -81,22 +87,31 @@ const CourseDetailPage = () => {
                   value={withdrawalReason}
                   onChange={(e) => setWithdrawalReason(e.target.value)}
                 />
-                <button onClick={handleWithdraw} disabled={isWithdrawing}>
-                  {isWithdrawing ? 'Applying...' : 'Apply for Withdrawal'}
-                </button>
+                <button onClick={handleWithdraw} disabled={isWithdrawing}>Withdraw</button>
+                {isWithdrawError && <p>Error withdrawing: {isWithdrawError.message}</p>}
+                {isWithdrawSuccess && <p>Withdrawal request submitted successfully!</p>}
               </div>
             )
           ) : (
-            <button onClick={handleEnroll} disabled={isEnrolling}>
-              {isEnrolling ? 'Enrolling...' : 'Enroll'}
-            </button>
+            <button onClick={handleEnroll} disabled={isEnrolling}>Enroll</button>
           )}
         </div>
       )}
-      {isEnrollError && <p>Error enrolling in course.</p>}
-      {isEnrollSuccess && <p>Successfully enrolled in the course!</p>}
-      {isWithdrawError && <p>Error applying for withdrawal.</p>}
-      {isWithdrawSuccess && <p>Successfully applied for withdrawal!</p>}
+
+      <h2>Course Files</h2>
+      {files && files.length > 0 ? (
+        <ul>
+          {files.map(file => (
+            <li key={file._id}>
+              <a href={`http://localhost:5000/api/v1/files/download/${file._id}`} download>
+                {file.fileName}
+              </a>
+            </li>
+          ))}
+        </ul>
+      ) : (
+        <p>No files available for this course.</p>
+      )}
     </div>
   );
 };

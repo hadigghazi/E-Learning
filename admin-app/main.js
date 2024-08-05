@@ -21,7 +21,6 @@ function createMainWindow() {
 
     mainWindow.loadURL("http://localhost:3001");
 
-    // Open the DevTools
     mainWindow.webContents.openDevTools();
 }
 

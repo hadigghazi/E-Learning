@@ -6,7 +6,7 @@ const router = express.Router();
 
 router.post('/upload', protect, restrictTo('admin'), uploadFile);
 
-router.get('/download/:id', protect, downloadFile);
+router.get('/download/:id', downloadFile);
 
 router.get('/', protect, restrictTo('admin'), getAllFiles);
 

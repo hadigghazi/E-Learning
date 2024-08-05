@@ -93,7 +93,17 @@ export const apiSlice = createApi({
           method: 'DELETE',
         }),
       }),
+      getFilesForCourse: builder.query({
+        query: (id) => `/files/course/${id}`,
+      }),
+      uploadFile: builder.mutation({
+        query: (formData) => ({
+          url: '/files/upload',
+          method: 'POST',
+          body: formData,
+        }),
+      }),
   }),
 });
 
-export const { useLoginMutation, useRegisterMutation, useLogoutMutation, useGetCoursesQuery, useGetCourseByIdQuery, useEnrollMutation, useGetMyCoursesQuery, useWithdrawMutation, useAddCourseMutation, useGetStudentsInCourseQuery, useGetWithdrawalsQuery, useUpdateWithdrawalStatusMutation, useDeleteWithdrawalMutation } = apiSlice;
+export const { useLoginMutation, useRegisterMutation, useLogoutMutation, useGetCoursesQuery, useGetCourseByIdQuery, useEnrollMutation, useGetMyCoursesQuery, useWithdrawMutation, useAddCourseMutation, useGetStudentsInCourseQuery, useGetWithdrawalsQuery, useUpdateWithdrawalStatusMutation, useDeleteWithdrawalMutation, useGetFilesForCourseQuery, useUploadFileMutation } = apiSlice;

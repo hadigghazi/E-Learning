@@ -67,7 +67,9 @@ export const apiSlice = createApi({
           body,
         }),
       }),
+      getFilesForCourse: builder.query({
+        query: (id) => `/files/course/${id}`,
+      }),
   }),
 });
-
-export const { useLoginMutation, useRegisterMutation, useLogoutMutation, useGetCoursesQuery, useGetCourseByIdQuery, useEnrollMutation, useGetMyCoursesQuery, useWithdrawMutation } = apiSlice;
+export const { useLoginMutation, useRegisterMutation, useLogoutMutation, useGetCoursesQuery, useGetCourseByIdQuery, useEnrollMutation, useGetMyCoursesQuery, useWithdrawMutation, useGetFilesForCourseQuery } = apiSlice;
