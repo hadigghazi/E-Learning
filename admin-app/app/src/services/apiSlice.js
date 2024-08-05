@@ -103,7 +103,10 @@ export const apiSlice = createApi({
           body: formData,
         }),
       }),
+      getCurrentUser: builder.query({
+        query: () => '/users/me',
+      }),
   }),
 });
 
-export const { useLoginMutation, useRegisterMutation, useLogoutMutation, useGetCoursesQuery, useGetCourseByIdQuery, useEnrollMutation, useGetMyCoursesQuery, useWithdrawMutation, useAddCourseMutation, useGetStudentsInCourseQuery, useGetWithdrawalsQuery, useUpdateWithdrawalStatusMutation, useDeleteWithdrawalMutation, useGetFilesForCourseQuery, useUploadFileMutation } = apiSlice;
+export const { useLoginMutation, useRegisterMutation, useLogoutMutation, useGetCoursesQuery, useGetCourseByIdQuery, useEnrollMutation, useGetMyCoursesQuery, useWithdrawMutation, useAddCourseMutation, useGetStudentsInCourseQuery, useGetWithdrawalsQuery, useUpdateWithdrawalStatusMutation, useDeleteWithdrawalMutation, useGetFilesForCourseQuery, useUploadFileMutation, useGetCurrentUserQuery } = apiSlice;

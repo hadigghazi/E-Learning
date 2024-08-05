@@ -9,6 +9,7 @@ import CoursesPage from './pages/CoursesPage';
 import CourseDetailPage from './pages/CourseDetailPage';
 import AddCoursePage from './pages/AddCoursePage';
 import WithdrawalsPage from './pages/WithdrawalsPage';
+import UserRoute from './components/UserRoute';
 
 const App = () => {
     return (
@@ -33,10 +34,10 @@ const App = () => {
             </ProtectedRoute>
           }
         />
-                <Route path='/courses' element={<CoursesPage />} />
-                <Route path="/courses/:id" element={<CourseDetailPage />} />
-                <Route path="/add-course" element={<AddCoursePage />} />
-                <Route path="/withdrawals" element={<WithdrawalsPage />} />
+                <Route path='/courses' element={<UserRoute><CoursesPage /></UserRoute>} />
+                <Route path="/courses/:id" element={<UserRoute><CourseDetailPage /></UserRoute>} />
+                <Route path="/add-course" element={<UserRoute><AddCoursePage /></UserRoute>} />
+                <Route path="/withdrawals" element={<UserRoute><WithdrawalsPage /></UserRoute>} />
             </Routes>
         </Router>
     );

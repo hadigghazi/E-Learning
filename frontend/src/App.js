@@ -8,6 +8,7 @@ import Navbar from './components/Navbar';
 import CoursesPage from './pages/CoursesPage';
 import CourseDetailPage from './pages/CourseDetailPage';
 import MyCoursesPage from './pages/MyCoursesPage';
+import UserRoute from './components/UserRoute';
 
 const App = () => {
     return (
@@ -32,9 +33,9 @@ const App = () => {
             </ProtectedRoute>
           }
         />
-                <Route path='/courses' element={<CoursesPage />} />
-                <Route path="/courses/:id" element={<CourseDetailPage />} />
-                <Route path="/my-courses" element={<MyCoursesPage />} />
+                <Route path='/courses' element={<UserRoute><CoursesPage /></UserRoute>} />
+                <Route path="/courses/:id" element={<UserRoute><CourseDetailPage /></UserRoute>} />
+                <Route path="/my-courses" element={<UserRoute><MyCoursesPage /></UserRoute>} />
             </Routes>
         </Router>
     );
