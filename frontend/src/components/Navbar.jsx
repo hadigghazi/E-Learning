@@ -21,7 +21,7 @@ const Navbar = () => {
 
   return (
     <nav className={styles.nav}>
-      <Link to="/" className={styles.logo}>MyApp</Link> {/* Logo text */}
+      <Link to="/" className={styles.logo}>CourseHub</Link> 
       <ul className={styles.list}>
         <li className={styles.listItem}>
           <Link to="/courses" className={styles.link}>Courses</Link>
