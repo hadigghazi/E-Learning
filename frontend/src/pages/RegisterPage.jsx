@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useRegisterMutation } from '../services/apiSlice';
+import styles from '../styles/RegisterPage.module.css';
 
 const RegisterPage = () => {
   const [formData, setFormData] = useState({
@@ -25,7 +26,7 @@ const RegisterPage = () => {
     try {
       const user = await register(formData).unwrap();
       console.log('User registered:', user);
-      setError(''); 
+      setError('');
     } catch (err) {
       console.error('Failed to register:', err);
       setError('Failed to register');
@@ -33,25 +34,25 @@ const RegisterPage = () => {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <div>
-        <label>Name:</label>
-        <input type="text" name="name" value={formData.name} onChange={handleChange} required />
+    <form onSubmit={handleSubmit} className={styles.form}>
+      <div className={styles.formGroup}>
+        <label className={styles.label}>Name:</label>
+        <input type="text" name="name" value={formData.name} onChange={handleChange} className={styles.input} required />
       </div>
-      <div>
-        <label>Email:</label>
-        <input type="email" name="email" value={formData.email} onChange={handleChange} required />
+      <div className={styles.formGroup}>
+        <label className={styles.label}>Email:</label>
+        <input type="email" name="email" value={formData.email} onChange={handleChange} className={styles.input} required />
       </div>
-      <div>
-        <label>Password:</label>
-        <input type="password" name="password" value={formData.password} onChange={handleChange} required />
+      <div className={styles.formGroup}>
+        <label className={styles.label}>Password:</label>
+        <input type="password" name="password" value={formData.password} onChange={handleChange} className={styles.input} required />
       </div>
-      <div>
-        <label>Confirm Password:</label>
-        <input type="password" name="passwordConfirm" value={formData.passwordConfirm} onChange={handleChange} required />
+      <div className={styles.formGroup}>
+        <label className={styles.label}>Confirm Password:</label>
+        <input type="password" name="passwordConfirm" value={formData.passwordConfirm} onChange={handleChange} className={styles.input} required />
       </div>
-      {error && <p style={{ color: 'red' }}>{error}</p>}
-      <button type="submit" disabled={isLoading}>Register</button>
+      {error && <p className={styles.errorMessage}>{error}</p>}
+      <button type="submit" className={styles.button} disabled={isLoading}>Register</button>
     </form>
   );
 };
