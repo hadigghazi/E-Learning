@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useGetWithdrawalsQuery, useUpdateWithdrawalStatusMutation, useDeleteWithdrawalMutation } from '../services/apiSlice';
-import styles from '../styles/WithdrawalsPage.module.css'; 
+import styles from '../styles/WithdrawalsPage.module.css';
 
 const WithdrawalsPage = () => {
   const { data: withdrawalsData, error, isLoading } = useGetWithdrawalsQuery();
@@ -59,7 +59,7 @@ const WithdrawalsPage = () => {
                     <button className={styles.button} onClick={() => handleStatusChange(withdrawal._id, 'rejected')}>Reject</button>
                   </>
                 )}
-                <button className={`${styles.button} ${styles.button-danger}`} onClick={() => handleDelete(withdrawal._id)}>Delete</button>
+                <button className={`${styles.button} ${styles.buttonDanger}`} onClick={() => handleDelete(withdrawal._id)}>Delete</button>
               </td>
             </tr>
           ))}

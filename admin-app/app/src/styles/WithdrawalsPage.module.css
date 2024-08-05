@@ -52,11 +52,10 @@
     background-color: #0097a7;
   }
   
-  .button-danger {
+  .buttonDanger {
     background-color: #f44336;
   }
   
-  .button-danger:hover {
+  .buttonDanger:hover {
     background-color: #d32f2f;
   }
-  
