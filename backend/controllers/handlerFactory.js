@@ -1,6 +1,5 @@
 import catchAsync from './../utils/catchAsync.js';
 import AppError from './../utils/appError.js';
-import APIFeatures from './../utils/apiFeatures.js';
 
 export const deleteOne = (Model) =>
   catchAsync(async (req, res, next) => {
@@ -65,23 +64,25 @@ export const getOne = (Model, popOptions) =>
     });
   });
 
-export const getAll = (Model) =>
-  catchAsync(async (req, res, next) => {
-    let filter = {};
-    if (req.params.tourId) filter = { tour: req.params.tourId };
-
-    const features = new APIFeatures(Model.find(filter), req.query)
-      .filter()
-      .sort()
-      .limitFields()
-      .paginate();
-    const doc = await features.query;
-
-    res.status(200).json({
-      status: 'success',
-      results: doc.length,
-      data: {
-        data: doc,
-      },
+  export const getAll = (Model) =>
+    catchAsync(async (req, res, next) => {
+      const filter = {};
+      
+      if (req.params.tourId) {
+        filter.tour = req.params.tourId;
+      }
+  
+      if (req.query.filter) {
+        Object.assign(filter, JSON.parse(req.query.filter));
+      }
+  
+      const docs = await Model.find(filter);
+  
+      res.status(200).json({
+        status: 'success',
+        results: docs.length,
+        data: {
+          data: docs,
+        },
+      });
     });
-  });
