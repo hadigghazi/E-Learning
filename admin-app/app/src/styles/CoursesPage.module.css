@@ -1,0 +1,50 @@
+.container {
+    padding: 2rem;
+    background-color: #f5f5f5;
+    min-height: 100vh;
+    font-family: Arial, sans-serif;
+  }
+  
+  .heading {
+    text-align: center;
+    color: #333;
+    margin-bottom: 1rem;
+  }
+  
+  .greeting {
+    text-align: center;
+    color: #555;
+    font-size: 1.2rem;
+    margin-bottom: 2rem;
+  }
+  
+  .courseList {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  .courseItem {
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin-bottom: 1rem;
+    padding: 1rem;
+    cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+  
+  .courseItem:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+  }
+  
+  .courseTitle {
+    font-size: 1.5rem;
+    margin: 0;
+    color: #333;
+  }
+  
+  .courseDescription {
+    color: #666;
+  }
+  
