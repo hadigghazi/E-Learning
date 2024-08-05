@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useGetWithdrawalsQuery, useUpdateWithdrawalStatusMutation, useDeleteWithdrawalMutation } from '../services/apiSlice';
+import styles from '../styles/WithdrawalsPage.module.css'; 
 
 const WithdrawalsPage = () => {
   const { data: withdrawalsData, error, isLoading } = useGetWithdrawalsQuery();
@@ -31,10 +32,10 @@ const WithdrawalsPage = () => {
   };
 
   return (
-    <div>
+    <div className={styles.container}>
       <h1>Withdrawal Requests</h1>
-      {statusError && <p>{statusError}</p>}
-      <table>
+      {statusError && <p className={styles.error}>{statusError}</p>}
+      <table className={styles.table}>
         <thead>
           <tr>
             <th>Course</th>
@@ -54,11 +55,11 @@ const WithdrawalsPage = () => {
               <td>
                 {withdrawal.status === 'pending' && (
                   <>
-                    <button onClick={() => handleStatusChange(withdrawal._id, 'approved')}>Approve</button>
-                    <button onClick={() => handleStatusChange(withdrawal._id, 'rejected')}>Reject</button>
+                    <button className={styles.button} onClick={() => handleStatusChange(withdrawal._id, 'approved')}>Approve</button>
+                    <button className={styles.button} onClick={() => handleStatusChange(withdrawal._id, 'rejected')}>Reject</button>
                   </>
                 )}
-                <button onClick={() => handleDelete(withdrawal._id)}>Delete</button>
+                <button className={`${styles.button} ${styles.button-danger}`} onClick={() => handleDelete(withdrawal._id)}>Delete</button>
               </td>
             </tr>
           ))}
