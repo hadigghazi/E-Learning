@@ -1,0 +1,76 @@
+.container {
+    padding: 2rem;
+    background-color: #f5f5f5;
+    min-height: 100vh;
+    font-family: Arial, sans-serif;
+  }
+  
+  .courseTitle {
+    font-size: 2rem;
+    color: #333;
+    margin-bottom: 0.5rem;
+  }
+  
+  .courseDescription {
+    font-size: 1.2rem;
+    color: #666;
+    margin-bottom: 2rem;
+  }
+  
+  .section {
+    margin-bottom: 2rem;
+  }
+  
+  .sectionTitle {
+    font-size: 1.8rem;
+    color: #444;
+    border-bottom: 2px solid #00bcd4;
+    padding-bottom: 0.5rem;
+    margin-bottom: 1rem;
+  }
+  
+  .list {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  .listItem {
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin-bottom: 0.5rem;
+    padding: 1rem;
+  }
+  
+  .fileLink {
+    color: #00bcd4;
+    text-decoration: none;
+  }
+  
+  .fileLink:hover {
+    text-decoration: underline;
+  }
+  
+  .uploadSection {
+    margin-top: 2rem;
+  }
+  
+  .uploadButton {
+    background-color: #00bcd4;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    padding: 0.5rem 1rem;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+  }
+  
+  .uploadButton:hover {
+    background-color: #0097a7;
+  }
+  
+  .fileInput {
+    margin-bottom: 1rem;
+  }
+  

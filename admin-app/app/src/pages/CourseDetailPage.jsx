@@ -1,6 +1,7 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { useGetCourseByIdQuery, useGetStudentsInCourseQuery, useGetFilesForCourseQuery, useUploadFileMutation } from '../services/apiSlice';
+import styles from '../styles/CourseDetailPage.module.css'; 
 
 const CourseDetailPage = () => {
   const { id } = useParams();
@@ -47,38 +48,44 @@ const CourseDetailPage = () => {
   };
 
   return (
-    <div>
-      <h1>{course?.title}</h1>
-      <p>{course?.description}</p>
+    <div className={styles.container}>
+      <h1 className={styles.courseTitle}>{course?.title}</h1>
+      <p className={styles.courseDescription}>{course?.description}</p>
 
-      <h2>Enrolled Students</h2>
-      {students && students.length > 0 ? (
-        <ul>
-          {students.map(student => (
-            <li key={student._id}>{student.name}</li>
-          ))}
-        </ul>
-      ) : (
-        <p>No students enrolled in this course.</p>
-      )}
+      <div className={styles.section}>
+        <h2 className={styles.sectionTitle}>Enrolled Students</h2>
+        {students && students.length > 0 ? (
+          <ul className={styles.list}>
+            {students.map(student => (
+              <li key={student._id} className={styles.listItem}>{student.name}</li>
+            ))}
+          </ul>
+        ) : (
+          <p>No students enrolled in this course.</p>
+        )}
+      </div>
 
-      <h2>Course Files</h2>
-      {files && files.length > 0 ? (
-        <ul>
-          {files.map(file => (
-            <li key={file._id}>
-              <a href={`http://localhost:5000/api/v1/files/download/${file._id}`} download>
-                {file.fileName}
-              </a>
-            </li>
-          ))}
-        </ul>
-      ) : (
-        <p>No files uploaded for this course.</p>
-      )}
+      <div className={styles.section}>
+        <h2 className={styles.sectionTitle}>Course Files</h2>
+        {files && files.length > 0 ? (
+          <ul className={styles.list}>
+            {files.map(file => (
+              <li key={file._id} className={styles.listItem}>
+                <a href={`http://localhost:5000/api/v1/files/download/${file._id}`} className={styles.fileLink} download>
+                  {file.fileName}
+                </a>
+              </li>
+            ))}
+          </ul>
+        ) : (
+          <p>No files uploaded for this course.</p>
+        )}
+      </div>
 
-      <input type="file" onChange={handleFileChange} />
-      <button onClick={handleFileUpload}>Upload File</button>
+      <div className={styles.uploadSection}>
+        <input type="file" className={styles.fileInput} onChange={handleFileChange} />
+        <button className={styles.uploadButton} onClick={handleFileUpload}>Upload File</button>
+      </div>
     </div>
   );
 };
