@@ -1,6 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { useGetCourseByIdQuery, useEnrollMutation, useWithdrawMutation, useGetMyCoursesQuery, useGetFilesForCourseQuery } from '../services/apiSlice';
+import {
+  useGetCourseByIdQuery,
+  useEnrollMutation,
+  useWithdrawMutation,
+  useGetMyCoursesQuery,
+  useGetFilesForCourseQuery,
+} from '../services/apiSlice';
+import styles from '../styles/CourseDetailPage.module.css';
 
 const CourseDetailPage = () => {
   const { id } = useParams();
@@ -69,39 +76,44 @@ const CourseDetailPage = () => {
   };
 
   return (
-    <div>
-      <h1>{course?.title}</h1>
-      <p>{course?.description}</p>
+    <div className={styles.container}>
+      <h1 className={styles.heading}>{course?.title}</h1>
+      <p className={styles.description}>{course?.description}</p>
       {user && (
         <div>
           {isEnrolled ? (
             withdrawalStatus === 'pending' ? (
               <div>
                 <p>Your withdrawal request is pending approval.</p>
-                <button disabled>Withdraw</button>
+                <button className={styles.button} disabled>Withdraw</button>
               </div>
             ) : (
               <div>
                 <textarea
+                  className={styles.textarea}
                   placeholder="Reason for withdrawal"
                   value={withdrawalReason}
                   onChange={(e) => setWithdrawalReason(e.target.value)}
                 />
-                <button onClick={handleWithdraw} disabled={isWithdrawing}>Withdraw</button>
+                <button className={styles.button} onClick={handleWithdraw} disabled={isWithdrawing}>
+                  Withdraw
+                </button>
                 {isWithdrawError && <p>Error withdrawing: {isWithdrawError.message}</p>}
                 {isWithdrawSuccess && <p>Withdrawal request submitted successfully!</p>}
               </div>
             )
           ) : (
-            <button onClick={handleEnroll} disabled={isEnrolling}>Enroll</button>
+            <button className={styles.button} onClick={handleEnroll} disabled={isEnrolling}>
+              Enroll
+            </button>
           )}
         </div>
       )}
 
-      <h2>Course Files</h2>
+      <h2 className={styles.heading}>Course Files</h2>
       {files && files.length > 0 ? (
-        <ul>
-          {files.map(file => (
+        <ul className={styles.files}>
+          {files.map((file) => (
             <li key={file._id}>
               <a href={`http://localhost:5000/api/v1/files/download/${file._id}`} download>
                 {file.fileName}
