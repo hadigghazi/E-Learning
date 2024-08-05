@@ -1,6 +1,7 @@
 import React from 'react';
 import { useGetMyCoursesQuery } from '../services/apiSlice';
 import { useNavigate } from 'react-router-dom';
+import styles from '../styles/MyCoursesPage.module.css';
 
 const MyCoursesPage = () => {
   const { data, error, isLoading } = useGetMyCoursesQuery();
@@ -11,29 +12,29 @@ const MyCoursesPage = () => {
     navigate(`/courses/${id}`);
   };
 
-  if (isLoading) return <p>Loading your courses...</p>;
+  if (isLoading) return <p className={styles.message}>Loading your courses...</p>;
 
   if (error) {
     console.error('Error fetching your courses:', error);
-    return <p>Error loading your courses: {error.data?.message || error.message || 'Unknown error'}</p>;
+    return <p className={styles.message}>Error loading your courses: {error.data?.message || error.message || 'Unknown error'}</p>;
   }
 
   const courses = data?.data.courses || [];
 
   return (
-    <div>
-      <h1>My Courses</h1>
+    <div className={styles.container}>
+      <h1 className={styles.heading}>My Courses</h1>
       {courses.length > 0 ? (
-        <ul>
+        <ul className={styles.courseList}>
           {courses.map((course) => (
-            <li key={course._id} onClick={() => handleCourseClick(course._id)}>
-              <h2>{course.title}</h2>
-              <p>{course.description}</p>
+            <li key={course._id} onClick={() => handleCourseClick(course._id)} className={styles.courseItem}>
+              <h2 className={styles.courseTitle}>{course.title}</h2>
+              <p className={styles.courseDescription}>{course.description}</p>
             </li>
           ))}
         </ul>
       ) : (
-        <p>You are not enrolled in any courses.</p>
+        <p className={styles.message}>You are not enrolled in any courses.</p>
       )}
     </div>
   );
